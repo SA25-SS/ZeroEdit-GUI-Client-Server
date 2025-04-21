@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 import { useDocument } from '@automerge/automerge-repo-react-hooks';
 import { updateText } from '@automerge/automerge/next';
 
+import { compile } from '../../utils/compiler';
+import { LANGUAGES } from '../../utils/constants';
+
 const Header = ({
     handleOpenDarkModeSettings,
     handleOpenShareLink,
@@ -16,6 +19,29 @@ const Header = ({
     //     console.log(e.target.value);
     //     IDEVars.fileName.set(e.target.value); 
     // }
+    // const setOutput = (e) => {
+    //     console.log(e.target.value);
+    //     IDEVars.output.set(e.target.value); 
+    // }
+
+    const compileCode = async (btnElement) => {
+        btnElement.disabled = true;
+        // btnElement.addClassName("")
+        
+        let language = LANGUAGES[IDEVars.fileName.ext] || "javascript";
+        let compileResult = await compile(language, IDEVars.editorContent.value, IDEVars.fileName.value, "stdin");
+
+        if(compileResult.status === "success"){
+            if(compileResult.error)
+                IDEVars.outputContent.set(compileResult.error, true);
+            else
+                IDEVars.outputContent.set(compileResult.output, false);
+        }
+        // IDEVars.outputContent.error = compileResult.status === 'error';
+        // IDEVars.outputContent.set(compileResult.output);
+
+        btnElement.disabled = false;
+    }
 
     return (
         <div id="Main-Screen-Header" className='d-flex align-items-center w-100 border-bottom'>
@@ -39,17 +65,17 @@ const Header = ({
                     Save
                 </button>
                 &nbsp;
-                <button name="Compile/Run" id="Compile/Run" className='text-success'>
+                <button name="Compile/Run" id="CompileRun" className='text-success' onClick={(e) => compileCode(e.target)}>
                     <i className='bi bi-play-circle-fill fs-5'></i>
                     &nbsp;
                     Run
                 </button>
                 &nbsp;
-                <button name="Compile/Run" id="Compile/Run" className='text-danger'>
+                {/* <button name="Compile/Run" id="Compile/Run" className='text-danger'>
                     <i className='bi bi-stop-circle-fill fs-5'></i>
                     &nbsp;
                     Stop
-                </button>
+                </button> */}
             </div>
 
             <div style={{ marginLeft: 'auto', alignSelf: 'right' }}>

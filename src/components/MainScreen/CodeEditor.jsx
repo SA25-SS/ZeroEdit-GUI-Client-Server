@@ -6,7 +6,7 @@ import Editor from '@monaco-editor/react';
 import {LANGUAGES} from "../../utils/constants";
 
 const CodeEditor = ({ editorThemeDark = false, IDEVars }) => {
-    const [name, ext] = IDEVars.fileName.value.split(/\.(?=[^\.]+$)/);
+    const ext = IDEVars.fileName.ext;
     const editorRef = useRef(null);
 
     const handleEditorChange = (content) => {
@@ -14,7 +14,7 @@ const CodeEditor = ({ editorThemeDark = false, IDEVars }) => {
 
         if (editorRef.current) {
             const position = editorRef.current.getPosition();
-            console.log(`[${position.lineNumber} : ${position.column}] => ${content.split("\n")[position.lineNumber-1][position.column-2]}`);
+            // console.log(`[${position.lineNumber} : ${position.column}] => ${content.split("\n")[position.lineNumber-1][position.column-2]}`);
         }
     };
 

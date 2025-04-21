@@ -18,7 +18,7 @@ import './SideBar.css';
 
 import { saveSettings, loadSavedSettings } from "../../utils/storage"
 
-function SettingsPopup({ show, handleClose, currentSettings, saveNewSettings }) {
+function SettingsPopup({ show, handleClose, currentSettings, saveNewSettings, userName }) {
     return (
         <Modal show={show} onHide={handleClose}>
             <SettingsPanel currentSettings={currentSettings} saveNewSettings={saveNewSettings} />
@@ -26,7 +26,7 @@ function SettingsPopup({ show, handleClose, currentSettings, saveNewSettings }) 
     );
 }
 
-const SideBar = ({ colSize = 2, DarkTheme, IDEVars }) => {
+const SideBar = ({ colSize = 2, DarkTheme, IDEVars, userName }) => {
     const [showSettingsPopup, setShowSettingsPopup] = useState(false);
     const handleOpenSettings = () => setShowSettingsPopup(true);
     const handleCloseSettings = () => setShowSettingsPopup(false);
@@ -63,7 +63,7 @@ const SideBar = ({ colSize = 2, DarkTheme, IDEVars }) => {
         <Col xs={colSize} >
             <Toolbar globalThemeDark={DarkTheme.global.value} IDEVars={IDEVars} />
             <RecentFiles openFileName={IDEVars.fileName.value} />
-            <ActiveUsers handleOpenPermissions={handleOpenPermissions} />
+            <ActiveUsers handleOpenPermissions={handleOpenPermissions} selfUserName={userName} usersList={IDEVars.users.list} ownerUserName={IDEVars.users.owner}/>
             <SettingsButton handleClick={handleOpenSettings} />
 
             <PermissionsPopup

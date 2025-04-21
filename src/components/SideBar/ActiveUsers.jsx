@@ -4,17 +4,14 @@
 import React from 'react';
 
 // Importing CSS and Bootstrap
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
-const User = ({index, userName, fileOwnerIndex=0, selfIndex=0, handleOpenPermissions}) => {
-    let user;
-
+const User = ({userName, handleOpenPermissions, isSelf, isOwner}) => {
     return (
         <Row className='mb-1'>
             <Col>
                 <div 
-                    key={index} 
-                    className={`user ${(index === selfIndex)?'user-self':''} ${(index === fileOwnerIndex)?'user-owner':''} text-start pt-0`}
+                    className={`user ${(isSelf)?'user-self':''} ${(isOwner)?'user-owner':''} text-start pt-0`}
                 >
                     <span>
                         <i className={`bi bi-person-circle`}></i> &nbsp;
@@ -24,7 +21,7 @@ const User = ({index, userName, fileOwnerIndex=0, selfIndex=0, handleOpenPermiss
                         <button 
                             onClick={() => {console.log(`Editing Permissions of ${userName}`); handleOpenPermissions(userName)}} 
                             className="user-permissions-menu" 
-                            disabled={(index === fileOwnerIndex) || (index === selfIndex)}
+                            disabled={(isOwner) || (isSelf)}
                         >
                             <i className='bi bi-three-dots fs-5 text-secondary' ></i>
                         </button>
@@ -35,7 +32,7 @@ const User = ({index, userName, fileOwnerIndex=0, selfIndex=0, handleOpenPermiss
     );
 }
 
-const ActiveUsers = ({usersList = ["Shreyas A.", "Sudhanva S", "Rakshita G. A.", "Mohaneesh R. P."], ownerIndex=0, selfIndex=0, handleOpenPermissions}) => {
+const ActiveUsers = ({usersList = ["Shreyas", "Sudhanva", "Rakshita", "Mohaneesh", "riqena"], ownerIndex=0, selfIndex=0, handleOpenPermissions, selfUserName, ownerUserName="Shreyas"}) => {
     
     return (
         <Col style={{height:"44vh", textAlign: "left"}}>
@@ -44,14 +41,15 @@ const ActiveUsers = ({usersList = ["Shreyas A.", "Sudhanva S", "Rakshita G. A.",
             </Row>
 
             {
-                usersList.map((user, index) => {
+                usersList.map((uname, index) => {
                     return (
                         <User 
                             key={index}
-                            index={index}
-                            userName={user}
-                            fileOwnerIndex={ownerIndex}
-                            selfIndex={selfIndex}
+
+                            userName={uname}
+                            isSelf={uname === selfUserName}
+                            isOwner={uname === ownerUserName}
+
                             handleOpenPermissions={handleOpenPermissions}
                         />
                     );

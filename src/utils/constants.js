@@ -15,3 +15,5 @@ export const LANGUAGES = {
     tcl: "tcl",              twig: "twig",            ts: "typescript",        vb: "vb",               v: "verilog",
     xml: "xml",              yaml: "yaml",            yml: "yaml"
 };
+
+export const CLIENT_SERVER_MODE = false;
