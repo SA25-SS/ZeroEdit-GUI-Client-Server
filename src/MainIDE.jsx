@@ -145,7 +145,7 @@ function MainIDE({ DarkTheme, docUrl }) {
         <Container className={`App px-0 ${(DarkTheme.global.value && "bg-dark text-light") || "bg-light text-dark"}`} fluid>
             <Row className='mx-0'>
                 <SideBar colSize={2} DarkTheme={DarkTheme} IDEVars={IDEVars} docUrl={docUrl} userName={currentUserName} />
-                <MainScreen colSize={10} DarkTheme={DarkTheme} IDEVars={IDEVars} docUrl={docUrl} userName={currentUserName}/>
+                <MainScreen colSize={10} DarkTheme={DarkTheme} IDEVars={IDEVars} docUrl={docUrl}/>
             </Row>
         </Container>
     );

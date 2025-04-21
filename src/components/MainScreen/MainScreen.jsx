@@ -20,7 +20,7 @@ import { CLIENT_SERVER_MODE } from '../../utils/constants';
 
 import './MainScreen.css';
 
-function DarkModeSettingsPopup({ show, handleClose, DarkTheme, docUrl }) {
+function DarkModeSettingsPopup({ show, handleClose, DarkTheme }) {
     return (
         <Modal show={show} onHide={handleClose}>
             <DarkModeSettings
@@ -34,8 +34,7 @@ const MainScreen = ({
     colSize = 10,
     DarkTheme,
     IDEVars,
-    docUrl, 
-    userName
+    docUrl
 }) => {
     // Dark Mode Settings Popup Modal Configuration
     const [darkModeSettingsPopup, setShowDarkModeSettingsPopup] = useState(false);
@@ -44,7 +43,7 @@ const MainScreen = ({
 
     // Share Link Popup Modal Configuration
     // const [shareLink, setShareLink] = useState(document.location.href);
-    const shareLink = `${document.location.host}/${CLIENT_SERVER_MODE?'':'?host='+userName}#${docUrl}`;
+    const shareLink = `${document.location.host}/#${docUrl}`;
     const [shareLinkPopup, setShowShareLinkPopup] = useState(false);
     const handleOpenShareLink = () => setShowShareLinkPopup(true);
     const handleCloseShareLink = () => setShowShareLinkPopup(false);
