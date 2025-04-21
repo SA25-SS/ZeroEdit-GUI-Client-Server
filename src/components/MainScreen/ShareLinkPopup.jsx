@@ -7,7 +7,21 @@ function ShareLinkPopup({ show, onHide, link }) {
   
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(link);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(link);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = link;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+        } catch (error) {
+          console.log('Fallback: Copy failed', error);
+        }
+        document.body.removeChild(textarea);
+      }
+      
     } catch (error) {
       console.log(error);
     }

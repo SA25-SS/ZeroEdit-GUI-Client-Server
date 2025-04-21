@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 
 // Importing CSS and Bootstrap
-import { Row, Col, Modal} from 'react-bootstrap';
+import { Row, Col, Modal } from 'react-bootstrap';
 
 import Toolbar from './Toolbar'
 import RecentFiles from './RecentFiles'
@@ -16,15 +16,17 @@ import PermissionsPopup from "./PermissionsPopup"
 
 import './SideBar.css';
 
-function SettingsPopup({ show, handleClose, currentSettings, handleSaveSettings }) {
+import { saveSettings, loadSavedSettings } from "../../utils/storage"
+
+function SettingsPopup({ show, handleClose, currentSettings, saveNewSettings, userName }) {
     return (
         <Modal show={show} onHide={handleClose}>
-            <SettingsPanel savedSettings={currentSettings} saveNewSettings={handleSaveSettings}/>
+            <SettingsPanel currentSettings={currentSettings} saveNewSettings={saveNewSettings} />
         </Modal>
     );
 }
 
-const SideBar = ({colSize = 2, globalThemeDark}) => {
+const SideBar = ({ colSize = 2, DarkTheme, IDEVars, userName }) => {
     const [showSettingsPopup, setShowSettingsPopup] = useState(false);
     const handleOpenSettings = () => setShowSettingsPopup(true);
     const handleCloseSettings = () => setShowSettingsPopup(false);
@@ -40,10 +42,10 @@ const SideBar = ({colSize = 2, globalThemeDark}) => {
         setShowPermissionsPopup(false)
         setSelectedUser();
     };
-    
-    const [settings, saveSettings] = useState({
-        confirmBeforeSave:  true,
-        maxUsers         :  5,
+
+    const [settings, updateSettings] = useState(loadSavedSettings() || {
+        confirmBeforeSave: true,
+        maxUsers: 5,
         defaultPermissions: {
             read: true,
             write: true,
@@ -51,16 +53,20 @@ const SideBar = ({colSize = 2, globalThemeDark}) => {
         }
     })
 
+    const saveNewSettings = (settings) => {
+        updateSettings(settings);
+        saveSettings(settings);
+    }
+
     //TODO : Add the UserList Here, with Owner and selfIndex states.
-    
     return (
         <Col xs={colSize} >
-            <Toolbar globalThemeDark={globalThemeDark}/>
-            <RecentFiles />
-            <ActiveUsers handleOpenPermissions={handleOpenPermissions}/>
-            <SettingsButton handleClick={handleOpenSettings}/>
+            <Toolbar globalThemeDark={DarkTheme.global.value} IDEVars={IDEVars} />
+            <RecentFiles openFileName={IDEVars.fileName.value} />
+            <ActiveUsers handleOpenPermissions={handleOpenPermissions} selfUserName={userName} usersList={IDEVars.users.list} ownerUserName={IDEVars.users.owner}/>
+            <SettingsButton handleClick={handleOpenSettings} />
 
-            <PermissionsPopup 
+            <PermissionsPopup
                 show={showPermissionsPopup}
                 onHide={handleClosePermissions}
                 modalSize={"md"}
@@ -68,12 +74,12 @@ const SideBar = ({colSize = 2, globalThemeDark}) => {
             />
 
             {/* Modal for Settings Popup */}
-            <SettingsPopup 
+            <SettingsPopup
                 show={showSettingsPopup}
                 handleClose={handleCloseSettings}
 
                 currentSettings={settings}
-                handleSaveSettings={saveSettings}
+                saveNewSettings={saveNewSettings}
             />
         </Col>
     );

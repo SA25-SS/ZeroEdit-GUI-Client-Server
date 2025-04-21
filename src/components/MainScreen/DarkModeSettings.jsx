@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
-function DarkModeSettings({ globalThemeDark, editorThemeDark, setGlobalTheme, setEditorTheme }) {
+function DarkModeSettings({ DarkTheme }) {
 	// State variables to track the selected mode for each setting
-	const [websiteMode, setWebsiteMode] = useState(globalThemeDark);
-	const [editorMode, setEditorMode] = useState(editorThemeDark);
+	const [websiteMode, setWebsiteMode] = useState(DarkTheme.global.value);
+	const [editorMode, setEditorMode] = useState(DarkTheme.editor.value);
 
 	const handleSave = () => {
 		// You can do something more interesting here, like:
 		// - Storing preferences in localStorage
 		// - Sending data to a server via an API call
 		// - Triggering a global theme switch, etc.
-		setGlobalTheme(websiteMode);
-		setEditorTheme(editorMode);
+		DarkTheme.global.set(websiteMode);
+		DarkTheme.editor.set(editorMode);
 
 		console.log(`Saved preference : { Website Mode: ${websiteMode}, Code Editor Mode: ${editorMode} }`);
 	};

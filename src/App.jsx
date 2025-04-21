@@ -6,23 +6,28 @@ import LoginBox from './LoginBox';
 import RegisterBox from './RegisterBox';
 import MainIDE from './MainIDE';
 
-import { loadSavedGlobalTheme, saveGlobalTheme, loadSavedEditorTheme, saveEditorTheme } from "./utils"
+import { loadSavedGlobalTheme, saveGlobalTheme, loadSavedEditorTheme, saveEditorTheme } from "./utils/storage"
 
-function App() {
-	// const default_dark_theme = true;
-
+//Router
+function App({docUrl}) {
+	// Dark Mode Settings
 	const [globalThemeDark, setGlobalThemeDark] = useState(loadSavedGlobalTheme());
 	const [editorThemeDark, setEditorThemeDark] = useState(loadSavedEditorTheme());
+
+	const DarkTheme = {
+		global:{
+			value:globalThemeDark, 
+			set:setGlobalThemeDark
+		},
+		editor:{
+			value:editorThemeDark, 
+			set:setEditorThemeDark
+		}
+	};
 
 	// Save to localStorage whenever it changes
 	useEffect(() => saveGlobalTheme(globalThemeDark), [globalThemeDark]);
 	useEffect(() => saveEditorTheme(editorThemeDark), [editorThemeDark]);
-	
-	// // Testing  Toggle between dark and light modes
-	// useEffect(() => {
-	// 	setGlobalThemeDark(default_dark_theme);
-	// 	setEditorThemeDark(default_dark_theme);
-	// }, [default_dark_theme]);
 
 	return (
 		<Router>
@@ -32,10 +37,8 @@ function App() {
 					path="/"
 					element={
 						<MainIDE
-							globalThemeDark={globalThemeDark}
-							editorThemeDark={editorThemeDark}
-							setGlobalTheme={setGlobalThemeDark}
-							setEditorTheme={setEditorThemeDark}
+							DarkTheme={DarkTheme}
+							docUrl={docUrl}
 						/>
 					}
 				/>

@@ -1,13 +1,5 @@
 MainScreen:
-    - Popup Create:
-        - Confirm Save FileName:
-            - Text (Do you realy)
-            - Yes/No
     - Logic Add:
-        - File Upload/Open
-        - States Manage:
-            - Dark Mode
-            - Settings Persist
         - Login:
             - Login Token Store
         - Register:

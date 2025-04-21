@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Card, Form, Button, Row, Col } from "react-bootstrap";
 
-const SettingsPanel = ({savedSettings, saveNewSettings}) => {
+const SettingsPanel = ({currentSettings, saveNewSettings}) => {
     // State for toggles and inputs
-    const [confirmBeforeSave, setConfirmBeforeSave] = useState(savedSettings.confirmBeforeSave);
-    const [maxUsers, setMaxUsers] = useState(savedSettings.maxUsers);
-    const [defaultPermissions, setDefaultPermissions] = useState(savedSettings.defaultPermissions);
+    const [confirmBeforeSave, setConfirmBeforeSave] = useState(currentSettings.confirmBeforeSave);
+    const [maxUsers, setMaxUsers] = useState(currentSettings.maxUsers);
+    const [defaultPermissions, setDefaultPermissions] = useState(currentSettings.defaultPermissions);
 
     // Handlers for toggles and inputs
     const handleConfirmToggle = () => {

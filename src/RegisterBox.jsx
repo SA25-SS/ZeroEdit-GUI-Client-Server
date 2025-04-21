@@ -5,15 +5,48 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import CryptoJS from 'crypto-js';
+
+import { clearAuthToken } from './utils/storage';
+import { logout, register } from './utils/auth';
+
 const RegisterBox = () => {
+
   const navigate = useNavigate();
 
-  const handleRegister = (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    navigate('/login'); // Navigate to the /login route
+  const handleRegister = async (event) => {
+    event.preventDefault();
+
+    // Collect form data
+    const fullName = event.target.formFullName.value;
+    const username = event.target.formUsername.value;
+    const age = event.target.formAge.value;
+    const email = event.target.formEmail.value;
+    const password = event.target.formPassword.value;
+    const confirmPassword = event.target.formConfirmPassword.value;
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    try {
+      // Call auth register function
+      await register({ name: fullName, username, age, email, password })
+      .then(()=>{
+        alert('Registration successful. Redirecting to login...');
+        navigate('/login');
+      })
+    } catch (error) {
+      console.error('Registration failed:', error.message);
+      alert(`Registration failed: ${error.message}`);
+    }
   };
+
   return (
     <div style={{ backgroundColor: '#eef4fa', minHeight: '100vh' }}>
+      {logout()}
       <Container
         className="d-flex justify-content-center align-items-center"
         style={{ minHeight: '100vh' }}

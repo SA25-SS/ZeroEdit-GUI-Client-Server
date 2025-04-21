@@ -6,7 +6,7 @@ import React from 'react';
 // Importing CSS and Bootstrap
 import { Col, Row, Button } from 'react-bootstrap';
 
-const File = ({index, fileName, selectedFileIndex=0}) => {
+const File = ({index, fileName, selectedFileIndex}) => {
     let button;
     let fileType= fileName.split(".")[1];
 
@@ -50,7 +50,12 @@ const File = ({index, fileName, selectedFileIndex=0}) => {
     );
 }
 
-const RecentFiles = ({fileNames = ["untitled.py"], selectedFileIndex=0}) => {
+const RecentFiles = ({fileNames = [], selectedFileIndex=-1, openFileName}) => {
+    if(openFileName){
+        fileNames.push(openFileName);
+        selectedFileIndex=(fileNames.length-1);
+    }
+    
     return (
         <Col style={{height:"44vh", textAlign: "left" }}>
             <Row>
