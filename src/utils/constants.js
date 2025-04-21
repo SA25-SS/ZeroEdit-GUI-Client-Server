@@ -16,4 +16,4 @@ export const LANGUAGES = {
     xml: "xml",              yaml: "yaml",            yml: "yaml"
 };
 
-export const CLIENT_SERVER_MODE = false;
+// export const CLIENT_SERVER_MODE = false;
