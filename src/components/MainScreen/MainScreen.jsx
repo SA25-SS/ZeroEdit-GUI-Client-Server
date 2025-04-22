@@ -16,7 +16,6 @@ import ConfirmModal from '../ConfirmBox';
 import { Row, Col, Modal } from 'react-bootstrap';
 
 import { downloadFile } from "../../utils/files"
-import { CLIENT_SERVER_MODE } from '../../utils/constants';
 
 import './MainScreen.css';
 
