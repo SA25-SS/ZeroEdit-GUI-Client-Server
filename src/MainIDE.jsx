@@ -63,6 +63,7 @@ function MainIDE({ DarkTheme, docUrl }) {
 
     useEffect(() => {
         if (!doc) return; // doc not ready yet
+        if (!currentUserName) return; // currentUserName not ready yet
 
         changeDoc(d => {
             if (!d.owner) d.owner = currentUserName;

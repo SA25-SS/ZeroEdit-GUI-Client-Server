@@ -26,9 +26,13 @@ const Toolbar = ({ globalThemeDark = false, IDEVars }) => {
         });
     };
 
+    const handleNewFile = () => {
+        window.open("/", '_blank').focus();
+    };
+
     return (
         <Row style={{ height: "7vh" }} className={`align-content-center text-center justify-content-around px-0 border-bottom ${(globalThemeDark && 'bg-dark') || 'bg-light'}`}>
-            <ToolbarButton icon='plus' globalThemeDark={globalThemeDark} iconSize={6} />
+            <ToolbarButton icon='plus' globalThemeDark={globalThemeDark} iconSize={6} onClick={handleNewFile}/>
             <ToolbarButton icon='upload' globalThemeDark={globalThemeDark} onClick={handleUploadFile} />
             <ToolbarButton icon='search' globalThemeDark={globalThemeDark} />
             <ToolbarButton icon='trash' globalThemeDark={globalThemeDark} />
